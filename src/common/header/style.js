@@ -4,6 +4,7 @@ import logoPic from '../../statics/logo.png'
 //带样式的div标签
 //header的wrapper
 export const HeaderWrapper = styled.div`
+  user-select:none;
   height:56px;
   border-bottom:1px solid #f0f0f0;
 `
@@ -64,28 +65,53 @@ export const SearchWrapper = styled.div`
     line-height:30px;
     border-radius:50%;
     text-align:center;
+    // 真不如直接用css3
+    transition:all .5s;
+    &.focused{
+      color:#fff;
+      background-color:#777;
+    }
   }
+  // .slide-enter{
+  //   width:120px;
+  //   transition:all .8s ease-out;
+  // }
+  // .slide-enter-active{
+  //   width:220px;
+  // }
+
+  // .slide-exit{
+  //   width:220px;
+  //   transition:all .8s ease-out;
+  // }
+  // .slide-exit-active{
+  //   width:120px;
+  // }
+
 `
 
 
 export const NavSearch = styled.input.attrs({
   placeholder:'搜索'
 })`
-  width:160px;
+  width:120px;
   height:38px;
   margin-top:9px;
   margin-left:20px;
   border:none;
   border-radius:19px;
-  padding:0 20px;
+  padding:0 35px 0 20px;
+  color:#777;
   background-color:#eee;
   font-size:14px;
   outline:none;
+  // 真不如直接用css3
+  transition:all .5s;
   &::placeholder{
     color:#999;
   }
-  &:focus{
-    width:230px;
+  &.focused{
+    width:220px;
   }
 `
 

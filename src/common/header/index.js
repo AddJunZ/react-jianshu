@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+// import {CSSTransition} from 'react-transition-group'
 import {
   HeaderWrapper,
   Logo,
@@ -11,6 +12,12 @@ import {
 } from './style'
 
 class Header extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      focused:false
+    }
+  }
   render() {
     return (
       <HeaderWrapper>
@@ -27,8 +34,14 @@ class Header extends Component {
           </NavItem>
           {/* 搜索框 */}
           <SearchWrapper>
-            <NavSearch></NavSearch>
-            <span className="iconfont">&#xe60c;</span>
+            {/* <CSSTransition
+              timeout={200}
+              in={this.state.focused}
+              classNames="slide"
+            > */}
+              <NavSearch className={this.state.focused ? "focused":""} onFocus={()=> {this.toggleFocus()}} onBlur={()=> {this.toggleFocus()}} ></NavSearch>
+              {/* </CSSTransition> */}
+              <span className={this.state.focused ? "iconfont focused" : 'iconfont'}>&#xe60c;</span>
           </SearchWrapper>
         </Nav>
         {/* 右边注册写文章 */}
@@ -38,6 +51,13 @@ class Header extends Component {
         </Addition>
       </HeaderWrapper>
     )
+  }
+  toggleFocus(){
+    this.setState((preState)=>{
+      return ({
+        focused:!preState.focused
+      })
+    })
   }
 }
 export default Header;

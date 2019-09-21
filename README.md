@@ -78,22 +78,31 @@ export const MyA = styled.a.attrs({
   /*singel style.....*/
 `
 ```
-2. 特殊样式的表达形式（&.my_active）
+2. 特殊样式的表达形式
 ```js
-//1. active活跃态的写法
+//1. active活跃态的写法（同个标签多个类名）（&.）
 export const MyA = styled.a`
   /*singel style.....*/
   &.my_active{
     color:red;
   }
 `
-//2. placeholder写法
+//2. placeholder\、hover等写法（&:）
 export const MyInput = styled.input.attrs({
   placeholder:'Seaching...'
 })`
   /*singel style.....*/
   &:placeholder{
     color:#eee;
+  }
+`
+//3. 标签的内部标签有类名（.）
+export const SearchWrapper = styled.div`
+  position:relative;
+  .iconfont{
+    position:absolute;
+    right:5px;
+    bottom:5px;
   }
 `
 ```
@@ -103,3 +112,9 @@ export const MyInput = styled.input.attrs({
 //div + span ?相邻
 //div span   ?这些怎么处理呢
 ```
+
+
+
+### 问题整理
+1. react组件中的super(props)到底起了什么作用
+2. CSSTransition使用过程中根标签只能有一个？用CSSTransition反而卡帧？用css3反而很流畅？
