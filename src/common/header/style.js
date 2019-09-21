@@ -51,6 +51,23 @@ export const NavItem = styled.div`
   }
 `
 
+
+export const SearchWrapper = styled.div`
+  float:left;
+  position:relative;
+  .iconfont{
+    position:absolute;
+    right:5px;
+    bottom:5px;
+    width:30px;
+    height:30px;
+    line-height:30px;
+    border-radius:50%;
+    text-align:center;
+  }
+`
+
+
 export const NavSearch = styled.input.attrs({
   placeholder:'搜索'
 })`
@@ -97,3 +114,4 @@ export const Button = styled.div`
     background:#ec6149;
   }
 `
+

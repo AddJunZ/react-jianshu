@@ -97,3 +97,9 @@ export const MyInput = styled.input.attrs({
   }
 `
 ```
+3. 问题来了，css那么多选择器怎么使用呢
+```js
+//div > span ?父子
+//div + span ?相邻
+//div span   ?这些怎么处理呢
+```
