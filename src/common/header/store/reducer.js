@@ -1,14 +1,13 @@
 import{ contants } from './index'
-const defaultState = {
+import {fromJS} from 'immutable'
+
+const defaultState = fromJS({
   focused: false
-};
+});
 export default (state = defaultState, action) => {
   switch (action.type) {
     case contants.CHANGE_FOCUS:
-      // const newState = JSON.parse(JSON.stringify(state));
-      // newState.focused = !newState.focused;
-      // return newState;
-      return { focused: !state.focused };
+      return state.set('focused',!state.get('focused'));
     default:
       return state;
   }

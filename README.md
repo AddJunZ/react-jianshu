@@ -7,7 +7,7 @@
 ```js
 //1. 将想要设置为全局样式的文件命名为.js文件
 //以**style.js**为例子,后面直接接css的模板字符串即可，并非函数调用
-import {createGlobalStyle} from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 export const GlobalStyle = createGlobalStyle`
   body{
     margin:0;
@@ -184,6 +184,35 @@ export default combineReducers({
 })
 ```
 通过使用redux里的combineReducer，可以帮助我们把整个reducer分割 成各个组件独立的reducer，再最后进行合并，同时，原先connect中的mapStateToProps和mapDispatch中对this.state的使用要相应变成this.state.header.xxx来调用了，相当于给state多了一层目录
+8. 同时，每个组件的store需要独立地使用且独立的存储，维护各自的actionTypes和actionCreators
+
+
+### immutable管理redux仓库
+1. 使用```immutable.js```避免无缘无故修改的state造成排错的困难，生成一个immutable对象，不可改变，设置state为immutable对象，```npm install immutable```，immutable对象的set方法，会结合之前的immutable对象的值和设置的值，返回一个全新的对象，而不是直接对state进行修改，因此与state的定义不冲突。Immutable的特点是，一但被创建就不能被修改。对immutable对象的修改都将返回一个新的immutable对象。三大特征： 持久化数据结构、结构共享、惰性操作
+```js
+// ./header/store/reducer.js
+import { fromJS } from 'immutable'
+
+//state必须要经过fromJS封装
+const defaultState = fromJS({
+  focused: false
+});
+
+//对应的获取与修改操作
+state.get('focused');
+state.set('focused',true);
+```
+2. 使用```redux-immutable```模块统一管理redux资源
+> 上面那种写法，store是js对象，store.header是一个immutable对象，容易混淆用法，因此把store也变成immutable对象便于编码
+```js
+//1. 改变组装reducer的函数，从原来的redux库变成redux-immutable库
+import { combineReducers } from 'redux-immutable';
+
+//调用
+// state.header.get('focused') 
+// ==>  state.get('header').get('focused');
+// or ==>  state.getIn(['header','focused']);
+```
 
 ### redux-devtools扩展工具以及react中间件的使用
 1. redux-devtools的使用，引入
@@ -198,7 +227,4 @@ export default combineReducers({
 ### 问题整理
 1. react组件中的super(props)到底起了什么作用
 2. CSSTransition使用过程中根标签只能有一个？用CSSTransition反而卡帧？用css3反而很流畅？
-```js
-//答案：
-过渡用的css里面的transition与CSSTransition定义的延迟时间不一致导致的
-```
+> 答案：过渡用的css里面的transition与CSSTransition定义的延迟时间不一致导致的
