@@ -10,7 +10,7 @@ export const HeaderWrapper = styled.div`
 `
 //header图片
 export const Logo = styled.a.attrs({
-  href:'/'
+  href: '/'
 })`
   height:56px;
   width:100px;
@@ -65,34 +65,16 @@ export const SearchWrapper = styled.div`
     line-height:30px;
     border-radius:50%;
     text-align:center;
-    // 真不如直接用css3
-    transition:all .5s;
     &.focused{
       color:#fff;
       background-color:#777;
     }
   }
-  // .slide-enter{
-  //   width:120px;
-  //   transition:all .8s ease-out;
-  // }
-  // .slide-enter-active{
-  //   width:220px;
-  // }
-
-  // .slide-exit{
-  //   width:220px;
-  //   transition:all .8s ease-out;
-  // }
-  // .slide-exit-active{
-  //   width:120px;
-  // }
-
 `
 
 
 export const NavSearch = styled.input.attrs({
-  placeholder:'搜索'
+  placeholder: '搜索'
 })`
   width:120px;
   height:38px;
@@ -105,13 +87,26 @@ export const NavSearch = styled.input.attrs({
   background-color:#eee;
   font-size:14px;
   outline:none;
-  // 真不如直接用css3
-  transition:all .5s;
   &::placeholder{
     color:#999;
   }
   &.focused{
     width:220px;
+  }
+  &.slide-enter{
+    width:120px;
+    transition:all .2s linear;
+  }
+  &.slide-enter-active{
+    width:220px;
+  }
+
+  &.slide-exit{
+    width:220px;
+    transition:all .2s linear;
+  }
+  &.slide-exit-active{
+    width:120px;
   }
 `
 

@@ -113,8 +113,13 @@ export const SearchWrapper = styled.div`
 //div span   ?这些怎么处理呢
 ```
 
-
+### redux管理数据
+1. 安装依赖```npm install redux react-redux --save```，```redux```用来管理数据，```react-redux```方便我们使用```redux```
 
 ### 问题整理
 1. react组件中的super(props)到底起了什么作用
 2. CSSTransition使用过程中根标签只能有一个？用CSSTransition反而卡帧？用css3反而很流畅？
+```js
+//答案：
+过渡用的css里面的transition与CSSTransition定义的延迟时间不一致导致的
+```
