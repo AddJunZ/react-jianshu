@@ -183,6 +183,7 @@ export default combineReducers({
   header: HeaderReducer
 })
 ```
+通过使用redux里的combineReducer，可以帮助我们把整个reducer分割 成各个组件独立的reducer，再最后进行合并，同时，原先connect中的mapStateToProps和mapDispatch中对this.state的使用要相应变成this.state.header.xxx来调用了，相当于给state多了一层目录
 
 ### redux-devtools扩展工具以及react中间件的使用
 1. redux-devtools的使用，引入

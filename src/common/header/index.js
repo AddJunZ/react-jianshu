@@ -2,7 +2,7 @@ import React from 'react'
 //redux
 import { connect } from 'react-redux'
 //getAction
-import { getChangeFocusAction } from '../../store/actionCreator'
+import { actionCreators } from './store'
 //css
 import { CSSTransition } from 'react-transition-group'
 import {
@@ -62,8 +62,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     toggleFocus() {
-      const action = getChangeFocusAction();
-      dispatch(action);
+      dispatch(actionCreators.getChangeFocusAction());
     }
   }
 }
