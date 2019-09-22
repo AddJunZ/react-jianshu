@@ -54,7 +54,7 @@ const Header = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    focused: state.focused
+    focused: state.header.focused
     //映射出来的变量名:store里面的变量名
   }
 }

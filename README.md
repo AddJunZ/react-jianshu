@@ -51,7 +51,7 @@ export const Logo = styled.a`
 `
 //2. 在**header**文件夹下的**index.js**调用对应的标签
 import React, { Component } from 'react'
-import {HeaderWrapper,Logo} from './style'
+import { HeaderWrapper, Logo } from './style'
 
 class Header extends Component{
   render(){
@@ -115,6 +115,84 @@ export const SearchWrapper = styled.div`
 
 ### redux管理数据
 1. 安装依赖```npm install redux react-redux --save```，```redux```用来管理数据，```react-redux```方便我们使用```redux```
+2. 创建store目录文件，再在内部创建```index.js```用来导出store，```reducer.js```用来导出reducer可以store使用
+3. 具体文件
+```js
+//  ./store/index.js
+import { createStore } from 'redux';
+import reducer from './reducer';
+
+const store = createStore(reducer);
+export default store;
+
+//  ./store/reducer.js
+const defaultState = {
+  //想要放置在store的公用属性
+  haha:'I am haha'
+}
+export default reduer = (state = defaultState,action) => {
+  //期间可以通过action的type属性对state做不同的操作
+  return state;
+}
+```
+4. 可选择性创建```./store/actionTypes.js```和```./store/actionCreator.js```分别对action的种类，还有获得action这一行为进行统一管理
+5. redux创建完成，需要在对用组件中进行引用
+6. 以Header组件为例子
+```js
+//1. 全局提供store的可访问性
+import store from './store'
+import { Provider } from 'react-redux'
+
+const App = () => {
+  return (
+    <Provider store={ store }>
+    </Provider>
+  )
+}
+//2. Header内部对store的真实使用
+import { connect } from 'react-redux';
+const Header = (props) => {
+  const  { haha } = props;
+  return (
+    <div></div>
+  )
+}
+
+const mapStateToProps = (state) => {
+  return {
+    //需要挂载带当前组件的props上的属性
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    //需要挂载到当前组件的props上的函数，同时使用dispatch操作store的函数
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Header)
+```
+7. 我们把数据以及数据的操作都存放在```./store/reducer.js```中，会导致整个文件过大难以维护，因此引入```combineReducer```这个函数
+```js
+import { combineReducers } from 'redux';
+import HeaderReducer from '../common/header/store/reducer';
+
+//组装所有的各个组件的reducer
+export default combineReducers({
+  //自己命名的key值:组件的reducer
+  header: HeaderReducer
+})
+```
+
+### redux-devtools扩展工具以及react中间件的使用
+1. redux-devtools的使用，引入
+```js
+//1. ./store/index.js
+
+```
+
+
+
 
 ### 问题整理
 1. react组件中的super(props)到底起了什么作用

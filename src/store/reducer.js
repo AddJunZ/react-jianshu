@@ -1,15 +1,10 @@
-import { CHANGE_FOCUS } from './actionTypes'
-const defaultState = {
-  focused: false
-};
-export default (state = defaultState, action) => {
-  switch (action.type) {
-    case CHANGE_FOCUS:
-      // const newState = JSON.parse(JSON.stringify(state));
-      // newState.focused = !newState.focused;
-      // return newState;
-      return { focused: !state.focused };
-    default:
-      return state;
-  }
-}
+import { combineReducers } from 'redux';
+//别名
+import { reducer as HeaderReducer } from '../common/header/store';
+
+//组装所有的各个组件的reducer
+const wholeReduers = combineReducers({
+  header: HeaderReducer
+})
+
+export default wholeReduers;
