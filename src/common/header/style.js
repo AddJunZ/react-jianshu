@@ -109,6 +109,63 @@ export const NavSearch = styled.input.attrs({
     width:120px;
   }
 `
+// 搜索提示框
+export const SearchInfo = styled.div`
+  margin-top: 9px;
+  width: 220px;
+  top: 100%;
+  left:20px;
+  border-radius: 4px;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0 0 8px rgba(0,0,0,.2);
+  padding: 20px 20px 10px;
+  border-bottom: 1px solid #f0f0f0;
+  &:after{
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-bottom-color: #fff;
+    left: 20px;
+    bottom: 99%;
+  }
+`
+
+
+export const SearchTitle = styled.div`
+  height: 20px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #969696;
+`
+export const SearchInfoList = styled.div`
+  overflow:hidden;
+  // 貌似这里并不需要它来形成bfc
+`
+export const SearchInfoItem = styled.a`
+  display:block;
+  float:left;
+  line-height:20px;
+  padding:0 5px;
+  margin-right:10px;
+  margin-bottom:15px;
+  font-size:12px;
+  border:1px solid #ddd;
+  color:#969696;
+  cursor:pointer;
+`
+export const SearchInfoSwitch = styled.a`
+  cursor:pointer;
+  float: right;
+  font-size: 13px;
+  color: #969696;
+  background-color: transparent;
+  border-width: 0;
+  padding: 0;
+`
+
 
 export const Addition = styled.div`
   position:absolute;
