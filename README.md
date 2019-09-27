@@ -208,11 +208,43 @@ state.set('focused',true);
 //1. 改变组装reducer的函数，从原来的redux库变成redux-immutable库
 import { combineReducers } from 'redux-immutable';
 
-//调用
+//获取调用
 // state.header.get('focused') 
 // ==>  state.get('header').get('focused');
 // or ==>  state.getIn(['header','focused']);
+// 设置调用
+// ==> state.set('focuse',false).set('page',1);
+// or ==> 同时改变多个数据
+// state.merge({
+//   focused:false,
+//   page:1
+// })
+     
+})
 ```
+3. 当state中有引用类型，由于整个对象都经过fromJS封装，内部的值为引用类型的也经过fromJS封装，因此更新的时候也需要用fromJS封装的值来替换。
+
+### redux-thunk
+> 有了这个中间件就可以在action中使用异步操作了
+1. 安装```npm install redux-thunk```
+2. 作用：之前只能在action中提交更新数据，现在能够让actionCreators导出一个函数了
+```js
+// header/store/actionCreators
+
+//前 -->
+export const CreateActionA = (value) => ({
+
+})
+
+//后
+export const createActionB = () => {
+  // 返回的函数还能接受dispatch方法，可以来派发异步请求
+  return (dispatch) => {
+    
+  }
+}
+```
+然而如果你想的话，依然可以不使用```redux-thunk```，然后把异步操作放在组件的生命周期中，只是这样比较难以维护和测试
 
 ### redux-devtools扩展工具以及react中间件的使用
 1. redux-devtools的使用，引入

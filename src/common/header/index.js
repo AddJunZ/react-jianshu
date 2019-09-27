@@ -23,11 +23,8 @@ import {
 } from './style'
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
-    const { focused, handleInputFocus, handleInputBlur } = this.props;
+    const { focused,handleInputFocus, handleInputBlur} = this.props;
     return (
       <HeaderWrapper>
         {/* 左边图片 */}
@@ -53,7 +50,7 @@ class Header extends Component {
             <span className={focused ? "iconfont focused" : 'iconfont'}>&#xe60c;</span>
             {/* 点搜索框对应的信息 */}
             {
-              this.getListArea(focused)
+              this.getListArea()
             }
           </SearchWrapper>
         </Nav>
@@ -65,21 +62,29 @@ class Header extends Component {
       </HeaderWrapper>
     )
   }
-  getListArea(show) {
-    if (show) {
+  getListArea() {
+    const { focused,mouseIn,list,page,totalPage,handleMouseIn,handleMouseOut,handlePageChange } = this.props;
+    const newList = list.toJS();
+    const pageList = [];
+    for(let i = (page - 1) * 10; i < page * 10; i++){
+      if(newList[i])
+      pageList.push(
+        <SearchInfoItem
+          key={newList[i]}
+        >{newList[i]}</SearchInfoItem>
+      )
+    }
+    if (focused || mouseIn) {
       return (
-        <SearchInfo >
+        <SearchInfo onMouseEnter={handleMouseIn} onMouseLeave={handleMouseOut}>
           <SearchTitle>
             热门搜索
-            <SearchInfoSwitch>换一批</SearchInfoSwitch>
+            <SearchInfoSwitch onClick={()=>handlePageChange(page,totalPage)}>换一批</SearchInfoSwitch>
           </SearchTitle>
           <SearchInfoList>
-            <SearchInfoItem>学习</SearchInfoItem>
-            <SearchInfoItem>教育</SearchInfoItem>
-            <SearchInfoItem>前端</SearchInfoItem>
-            <SearchInfoItem>后台</SearchInfoItem>
-            <SearchInfoItem>大数据</SearchInfoItem>
-            <SearchInfoItem>深度学习</SearchInfoItem>
+            {
+              pageList
+            }
           </SearchInfoList>
         </SearchInfo>
       )
@@ -93,7 +98,11 @@ class Header extends Component {
 const mapStateToProps = (state) => {
   return {
     // focused: state.get('header').get('focused')
-    focused: state.getIn(['header', 'focused'])
+    focused: state.getIn(['header', 'focused']),
+    list: state.getIn(['header', 'list']),
+    page:state.getIn(['header','page']),
+    totalPage:state.getIn(['header','totalPage']),
+    mouseIn:state.getIn(['header','mouseIn'])
     //映射出来的变量名:store里面的变量名
   }
 }
@@ -101,11 +110,27 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     handleInputFocus() {
+      dispatch(actionCreators.getList());
       dispatch(actionCreators.getChangeFocusAction(true));
     },
     handleInputBlur() {
       dispatch(actionCreators.getChangeFocusAction(false));
+    },
+    handleMouseIn() {
+      dispatch(actionCreators.getChangeMouseAction(true));
+    },
+    handleMouseOut(){
+      dispatch(actionCreators.getChangeMouseAction(false));
+    },
+    // 换页
+    handlePageChange(page,totalPage){
+      if(page < totalPage){
+        dispatch(actionCreators.getChangePageAction(page + 1));
+      }else{
+        dispatch(actionCreators.getChangePageAction(1));
+      }
     }
+
   }
 }
 
