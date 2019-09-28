@@ -24,7 +24,7 @@ import {
 
 class Header extends Component {
   render() {
-    const { focused,handleInputFocus, handleInputBlur} = this.props;
+    const { focused,handleInputFocus, handleInputBlur,list} = this.props;
     return (
       <HeaderWrapper>
         {/* 左边图片 */}
@@ -45,9 +45,9 @@ class Header extends Component {
               in={focused}
               classNames="slide"
             >
-              <NavSearch className={focused ? "focused" : ""} onFocus={handleInputFocus} onBlur={handleInputBlur} ></NavSearch>
+              <NavSearch className={focused ? "focused" : ""} onFocus={() => handleInputFocus(list)} onBlur={handleInputBlur} ></NavSearch>
             </CSSTransition>
-            <span className={focused ? "iconfont focused" : 'iconfont'}>&#xe60c;</span>
+            <span className={focused ? "iconfont focused zoom" : 'iconfont zoom'}>&#xe60c;</span>
             {/* 点搜索框对应的信息 */}
             {
               this.getListArea()
@@ -79,7 +79,10 @@ class Header extends Component {
         <SearchInfo onMouseEnter={handleMouseIn} onMouseLeave={handleMouseOut}>
           <SearchTitle>
             热门搜索
-            <SearchInfoSwitch onClick={()=>handlePageChange(page,totalPage)}>换一批</SearchInfoSwitch>
+            <SearchInfoSwitch onClick={()=>handlePageChange(page,totalPage,this.spinIcon)}>
+              <span ref={(icon)=>{this.spinIcon = icon}} className='iconfont spin'>&#xe851;</span>
+              换一批
+              </SearchInfoSwitch>
           </SearchTitle>
           <SearchInfoList>
             {
@@ -109,8 +112,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleInputFocus() {
-      dispatch(actionCreators.getList());
+    handleInputFocus(list) {
+      // console.log(list);//list是fromJS对象，长度获取是list.size，或者你转化为JS对象list.toJS().length
+      list.toJS().length === 0 && dispatch(actionCreators.getList());
       dispatch(actionCreators.getChangeFocusAction(true));
     },
     handleInputBlur() {
@@ -123,7 +127,14 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actionCreators.getChangeMouseAction(false));
     },
     // 换页
-    handlePageChange(page,totalPage){
+    handlePageChange(page,totalPage,spin){
+      let oldAngle = spin.style.transform.replace(/[^0-9]/ig,'');
+      if(oldAngle){
+        oldAngle = parseInt(oldAngle,10);
+      }else{
+        oldAngle = 0;
+      }
+      spin.style.transform = 'rotate(' + (oldAngle + 180) +'deg)';
       if(page < totalPage){
         dispatch(actionCreators.getChangePageAction(page + 1));
       }else{

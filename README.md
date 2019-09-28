@@ -253,6 +253,19 @@ export const createActionB = () => {
 
 ```
 
+### React的路由
+1. 安装react-router-dom
+2. 在App.js安装路由向导
+```js
+//App.js
+import { BrowserRouter,Route } from "react-router-dom";
+
+<BrowserRouter>
+  <Route path='/' exact render={()=><div>home</div>}></Route>
+  <Route path='/detail' exact render={()=><div>detail</div>}></Route>
+</BrowserRouter>
+
+```
 
 
 
